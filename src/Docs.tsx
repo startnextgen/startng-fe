@@ -1,3 +1,4 @@
+import SiteFooter from "./SiteFooter";
 import { useEffect, useState } from "react";
 import { me, User } from "./api";
 import AccountMenu from "./AccountMenu";
@@ -111,10 +112,7 @@ export default function Docs() {
           {source && <Markdown source={source} />}
         </article>
       </main>
-      <footer className="container footer">
-        <span>start<span>.ng</span></span>
-        <span>Built by the HNG community</span>
-      </footer>
+      <SiteFooter />
       <ScrollJump />
     </>
   );

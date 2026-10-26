@@ -3,7 +3,7 @@
 Plain answers to questions people and AI assistants ask about start.ng. Checked against the site's own pages and docs; for anything that changes (which games exist, who is winning) use the live pages linked below.
 
 Q: What is start.ng?
-A: Nigeria's home for free browser games, built by the HNG community. Games run in the browser with nothing to download, and each one has its own address, like yourgame.start.ng. https://start.ng/
+A: Nigeria's home for free browser games, built by the HNG community. Games run in the browser with nothing to download, and each one has its own address, like yourgame.start.ng. https://start.ng/ and https://start.ng/about
 
 Q: Are there Nigerian or African web games on start.ng?
 A: Yes. Many games here are Naija-themed, from danfo rush hour to jollof and Lagos markets, and games from across Africa are welcome. Game makers anywhere on the continent can put their games on start.ng for free. https://start.ng/games

@@ -1,3 +1,4 @@
+import SiteFooter from "./SiteFooter";
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { adminMe, AdminMe, approvePendingGame, getGameSession, trackPlay, getPendingGame, googleLogin, listGames, me, myGames, PendingGameInfo, saveCharacter, TokenResponse, User } from "./api";
@@ -504,6 +505,7 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
         <section id="about" className="container about">
           <h2>About start.ng</h2>
           {ABOUT.map((p) => <p key={p}>{p}</p>)}
+          <p><a href="/about">More about start.ng →</a></p>
           <h3>Questions</h3>
           <div className="faq">
             {QUESTIONS.map(([q, a]) => (
@@ -514,10 +516,7 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
         )}
       </main>
 
-      <footer className="container footer">
-        <span>start<span>.ng</span></span>
-        <span>Built by the HNG community</span>
-      </footer>
+      <SiteFooter />
       <PageParts page="everywhere" user={user} onSignIn={() => setSignInOpen(true)} />
       <ScrollJump />
       {user && wardrobeOn && !profileOpen && <Suspense fallback={null}><UnlockPopup user={user} /></Suspense>}

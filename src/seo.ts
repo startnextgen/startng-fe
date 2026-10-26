@@ -48,6 +48,11 @@ export const PAGES: Record<string, Seo> = {
     image: CREATORS_IMAGE,
     imageAlt: CREATORS_IMAGE_ALT,
   },
+  about: {
+    title: "About start.ng · Nigeria's home for browser games",
+    description: "start.ng is Nigeria's home for free browser games, built by the HNG community. What it is, what you can do here, and answers to common questions.",
+    path: "/about",
+  },
   hangout: {
     title: "The Hangout · start.ng",
     description: "The Hangout is start.ng's own multiplayer park. Sign in as your character, walk around and meet everyone else who's there.",
@@ -163,6 +168,7 @@ export const STATIC_PAGES: [string, Seo][] = [
   ["creators.html", PAGES.creators],
   ["hangout.html", PAGES.hangout],
   ["docs.html", PAGES.docs],
+  ["about.html", PAGES.about],
   ["tournament.html", PAGES.tournament],
   ["leaderboard.html", PAGES.leaderboard],
   ["game.html", PAGES.game],
@@ -182,7 +188,7 @@ export const STATIC_PAGES: [string, Seo][] = [
 ];
 
 /** Pages that belong in sitemap.xml. */
-export const SITEMAP_PATHS = ["home", "games", "creators", "tournament", "leaderboard", "hangout", "docs"].map((k) => PAGES[k].path);
+export const SITEMAP_PATHS = ["home", "games", "creators", "tournament", "leaderboard", "hangout", "docs", "about"].map((k) => PAGES[k].path);
 
 /** A picture's full address: paths in public/ get the site in front, full addresses stay as they are. */
 const imageUrl = (site: string, image: string) => (/^https?:\/\//.test(image) ? image : site + image);

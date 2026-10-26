@@ -134,13 +134,37 @@ mark { background: linear-gradient(transparent 62%, var(--lime) 62%, var(--lime)
 .about h2 { font-size: 2.1rem; letter-spacing: -.035em; margin: 0 0 16px; }
 .about > p { max-width: 720px; margin: 0 0 12px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
 .about h3 { margin: 32px 0 12px; font-size: 1.3rem; letter-spacing: -.02em; }
+.about-page { padding-top: 32px; }
+.about-page h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); letter-spacing: -.04em; margin: 4px 0 16px; }
+.about-page .lead { max-width: 720px; margin: 0 0 12px; color: var(--muted); font-size: 1.15rem; line-height: 1.7; }
+.about-page h2 { margin-top: 48px; }
+.about-ways { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .about-ways { grid-template-columns: 1fr; } }
+.about-ways a { display: grid; gap: 6px; height: 100%; padding: 16px 18px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; color: inherit; text-decoration: none; }
+.about-ways a:hover { border-color: var(--accent, currentColor); }
+.about-ways b { font-size: 1.05rem; }
+.about-ways span { color: var(--muted); line-height: 1.55; }
+.about-questions { display: grid; gap: 10px; }
+.about-questions > div { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 14px 18px 16px; }
+.about-questions h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.about-questions p { margin: 0; color: var(--muted); line-height: 1.6; }
 .faq { display: grid; gap: 10px; }
 .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
 .faq summary { padding: 14px 18px; font-weight: 600; }
 .faq details p { margin: 0; padding: 0 18px 16px; color: var(--muted); line-height: 1.6; }
 
-.footer { display: flex; justify-content: space-between; margin-top: 40px; padding: 28px 24px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
-.footer > span:first-child { color: var(--ink); font-weight: 800; }
+/* the bottom space keeps the floating Help and scroll-up buttons off the last line */
+.site-footer { margin-top: 56px; padding: 0 24px 92px; color: var(--muted); font-size: .92rem; }
+.site-footer-grid { padding-top: 40px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
+.site-footer-brand .logo { font-size: 1.35rem; color: var(--ink); }
+.site-footer-brand p { margin: 10px 0 0; max-width: 34ch; line-height: 1.6; }
+.site-footer h2 { margin: 0 0 12px; font: .72rem var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.site-footer nav a { color: var(--ink); font-weight: 600; }
+.site-footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.site-footer-base { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; margin: 32px 0 0; padding-top: 18px; border-top: 1px solid var(--line); font-size: .85rem; }
+@media (max-width: 760px) { .site-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .site-footer-brand { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .site-footer { padding: 0 16px 92px; } .site-footer-grid { padding-top: 32px; } .site-footer-base { flex-direction: column; } }
 
 /* sign-in popup */
 .overlay { position: fixed; inset: 0; background: var(--scrim); backdrop-filter: blur(4px); display: grid; place-items: center; padding: 16px; z-index: 60; overflow-y: auto; overscroll-behavior: contain; }

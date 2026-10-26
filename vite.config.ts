@@ -4,7 +4,10 @@ import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import AboutView from "./src/AboutView";
+import { QUESTIONS } from "./src/home-copy";
 import { Markdown, slug } from "./src/markdown";
+import { SiteFooterView } from "./src/SiteFooterView";
 import { DEFAULT_SITE_URL, headTags, jsonLd, PAGES, SITEMAP_PATHS, STATIC_PAGES } from "./src/seo";
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -23,7 +26,7 @@ function docsText(site: string): string {
     '<a class="btn ghost" href="/docs.md" download="startng-docs.md">Download as .md</a></div>' +
     (toc ? `<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p>${toc}</nav>` : "") +
     `</aside><article class="docs-body">${renderToStaticMarkup(createElement(Markdown, { source }))}</article></main>` +
-    '<footer class="container footer"><span>start<span>.ng</span></span><span>Built by the HNG community</span></footer>'
+    renderToStaticMarkup(createElement(SiteFooterView))
   );
 }
 
@@ -82,6 +85,13 @@ function seoPages(site: string): Plugin {
       fill("friends-tournaments.html", PAGES.friendsTournaments.path, `<!--# include virtual="/_ssr/feature/friends" -->`);
       // /docs and /hangout: written into the page at build time (they change only with a deploy).
       fill("docs.html", PAGES.docs.path, docsText(site));
+      fill("about.html", PAGES.about.path, renderToStaticMarkup(createElement(AboutView)));
+      // The questions as FAQ data for search engines and answer engines (the same words as the page).
+      const faq = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: QUESTIONS.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) };
+      const about = readFileSync(resolve(out, "about.html"), "utf8");
+      if (!about.includes("<!--/seo-->")) throw new Error("about.html has no seo block");
+      writeFileSync(resolve(out, "about.html"), about.replace("<!--/seo-->", () => `<script type="application/ld+json">${JSON.stringify(faq).replace(/</g, "\\u003c")}</script>
+    <!--/seo-->`));
       fill("hangout.html", PAGES.hangout.path, hangoutText());
       mkdirSync(out, { recursive: true });
       writeFileSync(resolve(out, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /approve/\nDisallow: /connect\n\nSitemap: ${site}/sitemap.xml\n`);
