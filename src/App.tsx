@@ -185,7 +185,8 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
   // What the search box suggests: game names and their creators.
   const suggestions = useMemo(() => [HANGOUT, ...(games ?? [])].flatMap((g) => [g.title, g.by]), [games]);
   const everyCard = [HANGOUT, ...(allGames ? community : popular)];
-  const cards = filters.apply(searching ? everyCard.filter((g) => matches(q, g.title, g.host, g.by)) : everyCard);
+  // Searching a word that only appears in a game's description must find it, as it already does on /creators.
+  const cards = filters.apply(searching ? everyCard.filter((g) => matches(q, g.title, g.host, g.by, g.description ?? "")) : everyCard);
   // What this page shows: the first HOME_GAMES on the homepage, one page of them on /games.
   const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const current = Math.min(page, pages); // a search or filter past its last page shows the last one
