@@ -27,6 +27,7 @@ import { CreatorsPage, CreatorsSection } from "./Creators";
 import PageParts from "./features/PageParts";
 import { useFeature } from "./features/flags";
 import { LeaderboardPage, TournamentBanner, TournamentPage, useTournament } from "./Tournament";
+import { useMajorMode } from "./majorMode";
 import { ABOUT, QUESTIONS } from "./home-copy";
 
 // Set when a game sent the user here to sign in: we send them back afterwards.
@@ -176,6 +177,7 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
   const favs = useFavorites(user);
   // Today's tournament: the homepage banner, the badge on game pages, and /tournament.
   const tournament = useTournament(user, view === "home" || gamePage || tournamentPage);
+  const majorMode = useMajorMode(); // a running major hides the daily tournament banner on the homepage
 
   // The Hangout is always first; the rest come from the API (newest first). The homepage shows the
   // most played this week; ties keep the newest first.
@@ -185,7 +187,8 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
   // What the search box suggests: game names and their creators.
   const suggestions = useMemo(() => [HANGOUT, ...(games ?? [])].flatMap((g) => [g.title, g.by]), [games]);
   const everyCard = [HANGOUT, ...(allGames ? community : popular)];
-  const cards = filters.apply(searching ? everyCard.filter((g) => matches(q, g.title, g.host, g.by)) : everyCard);
+  // Searching a word that only appears in a game's description must find it, as it already does on /creators.
+  const cards = filters.apply(searching ? everyCard.filter((g) => matches(q, g.title, g.host, g.by, g.description ?? "")) : everyCard);
   // What this page shows: the first HOME_GAMES on the homepage, one page of them on /games.
   const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const current = Math.min(page, pages); // a search or filter past its last page shows the last one
@@ -408,7 +411,8 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
         </section>
         )}
 
-        {view === "home" && <TournamentBanner tournament={tournament.tournament} />}
+        {/* While a major runs it takes the daily tournament's place on the homepage (majorMode.ts); wait for the answer so the banner doesn't flash. */}
+        {view === "home" && majorMode.ready && !majorMode.running && <TournamentBanner tournament={tournament.tournament} />}
         {view === "home" && <PageParts page="home" user={user} onSignIn={() => setSignInOpen(true)} games={community} />}
 
         {(view === "home" || allGames) && (
